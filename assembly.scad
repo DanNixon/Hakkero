@@ -49,7 +49,7 @@ module Bottom()
 			}
 }
 
-module Reflector(inner, outer)
+module Reflector(inner, outer, height)
 {
 	color("Silver")
 		hull()
@@ -79,7 +79,7 @@ side_explode = 1;
 Bottom();
 
 translate([0, 0, explode*(material_thickness/2)])
-	Reflector(35, 130);
+	Reflector(35, 130, 45);
 
 for(i = led_positions)
 	translate([0, 0, explode*i])
