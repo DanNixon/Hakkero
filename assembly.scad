@@ -1,3 +1,5 @@
+include <CAD-Library/dxf_import.scad>;
+
 material_thickness = 3;
 height = 50;
 
@@ -7,26 +9,19 @@ led_positions = [15, 35];
 module Top()
 {
 	color("Brown")
-		linear_extrude(height=material_thickness, center=true)
-			difference()
-			{
-				import (file="front.dxf", layer="cut");
-				import (file="front.dxf", layer="cut_brackets");
-			}
+        DXFImport(file="front.dxf", thickness=material_thickness, addition_layers=["cut"], subtraction_layers=["cut_brackets"]);
 }
 
 module TopPewter()
 {
 	color("Silver")
-		linear_extrude(height=material_thickness, center=true)
-			import (file="front_pewter.dxf", layer="cut");
+		DXFImport(file="front_pewter.dxf", thickness=material_thickness, addition_layers=["cut"]);
 }
 
 module TopAcrylic()
 {
 	color("Cyan", 0.5)
-		linear_extrude(height=material_thickness, center=true)
-			import (file="front_acrylic.dxf", layer="cut");
+		DXFImport(file="front_acrylic.dxf", thickness=material_thickness, addition_layers=["cut"]);
 }
 
 module Side(dist)
@@ -34,19 +29,13 @@ module Side(dist)
 	color("Red")
 		rotate([90, 0, 0])
 			translate([0, 0, dist])
-				linear_extrude(height=material_thickness, center=true)
-					import (file="side.dxf", layer="cut");
+				DXFImport(file="side.dxf", thickness=material_thickness, addition_layers=["cut"]);
 }
 
 module Bottom()
 {
 	color("Brown")
-		linear_extrude(height=material_thickness, center=true)
-			difference()
-			{
-				import (file="rear.dxf", layer="cut");
-				import (file="rear.dxf", layer="cut_brackets");
-			}
+		DXFImport(file="rear.dxf", thickness=material_thickness, addition_layers=["cut"], subtraction_layers=["cut_brackets"]);
 }
 
 module Reflector(inner, outer, height)
