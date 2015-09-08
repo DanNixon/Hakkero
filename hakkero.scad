@@ -2,29 +2,57 @@ include <CAD-Library/dxf_import.scad>;
 
 module Top(material_thickness)
 {
-    DXFImport(file="front.dxf", thickness=material_thickness, addition_layers=["cut"], subtraction_layers=["cut_brackets"]);
-}
+    color("Brown")
+        DXFImport(file="front.dxf",
+                  thickness=material_thickness,
+                  addition_layers=["cut"],
+                  subtraction_layers=["cut_brackets", "acrylic_cut"]);
 
-module TopPewter(material_thickness)
-{
-    DXFImport(file="front_pewter.dxf", thickness=material_thickness, addition_layers=["cut"]);
+    color("Silver")
+        DXFImport(file="front_pewter.dxf",
+                  thickness=material_thickness,
+                  addition_layers=["cut"]);
+
+    color("Black")
+        DXFImport(file="front_acrylic.dxf",
+                  thickness=material_thickness,
+                  addition_layers=["black"],
+                  subtraction_layers=["white_inner"]);
+
+    color("White")
+    {
+        DXFImport(file="front_acrylic.dxf",
+                  thickness=material_thickness,
+                  addition_layers=["white_outer"],
+                  subtraction_layers=["black"]);
+        DXFImport(file="front_acrylic.dxf",
+                  thickness=material_thickness,
+                  addition_layers=["white_inner"]);
+    }
 }
 
 module TopAcrylic(material_thickness)
 {
-    DXFImport(file="front_acrylic.dxf", thickness=material_thickness, addition_layers=["cut"]);
+    DXFImport(file="acrylic_diffuser.dxf",
+              thickness=material_thickness,
+              addition_layers=["cut"]);
 }
 
 module Side(material_thickness, dist)
 {
     rotate([90, 0, 0])
         translate([0, 0, dist])
-            DXFImport(file="side.dxf", thickness=material_thickness, addition_layers=["cut"]);
+            DXFImport(file="side.dxf",
+                      thickness=material_thickness,
+                      addition_layers=["cut"]);
 }
 
 module Bottom(material_thickness)
 {
-    DXFImport(file="rear.dxf", thickness=material_thickness, addition_layers=["cut"], subtraction_layers=["cut_brackets"]);
+    DXFImport(file="rear.dxf",
+              thickness=material_thickness,
+              addition_layers=["cut"],
+              subtraction_layers=["cut_brackets"]);
 }
 
 module LEDRing(led_outer, led_width=5, led_thickness=3)

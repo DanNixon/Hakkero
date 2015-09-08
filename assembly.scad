@@ -39,9 +39,4 @@ color("Cyan", 0.5)
 
 /* Top panel and pewter */
 translate([0, 0, explode*(height+material_thickness)])
-{
-    color("Brown")
-        Top(material_thickness);
-    color("Silver")
-        TopPewter(material_thickness);
-}
+    Top(material_thickness);
