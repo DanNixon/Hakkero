@@ -7,7 +7,7 @@ projection(cut=true)
     {
         /* LED reflector */
         color("Silver")
-            translate([0, 0, explode*(material_thickness/2)])
+            translate([0, 0, material_thickness/2])
                 Reflector(reflector_inner, reflector_outer, led_mount_height);
 
         /* LED mount */
