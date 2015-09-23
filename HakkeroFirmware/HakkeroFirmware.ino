@@ -23,9 +23,9 @@ LunaController_MIDI<SoftwareSerial> luna(midiSerial, 1);
 
 UniversalInputManager switchManager;
 
-#define MODE_PRESET 			0b00000000
-#define MODE_WHEEL 				0b00000001
-#define MODE_LUNA_RGB 		0b00000010
+#define MODE_PRESET       0b00000000
+#define MODE_WHEEL        0b00000001
+#define MODE_LUNA_RGB     0b00000010
 #define MODE_LUNA_RGB_SEG 0b00000011
 
 uint8_t g_mode = MODE_PRESET;
@@ -57,44 +57,44 @@ void setup()
   Serial.begin(DEBUG_BAUD);
 #endif
   uint8_t result;
-  
+
   result = luna.setCallback(&luna_handler);
 #ifdef DEBUG_BAUD
   Serial.println(result);
 #endif
-	
-	result = switchManager.addDevice(new ArduinoButton(0, 4));
+
+  result = switchManager.addDevice(new ArduinoButton(0, 4));
 #ifdef DEBUG_BAUD
   Serial.println(result);
 #endif
 
-	result = switchManager.addDevice(new ArduinoButton(1, 5));
+  result = switchManager.addDevice(new ArduinoButton(1, 5));
 #ifdef DEBUG_BAUD
   Serial.println(result);
 #endif
-	
+
   memset(g_lunaSettings, 4, 0);
-  
-	strip.begin();
+
+  strip.begin();
   strip.show();
-  
+
   // Set initial state
   switchManager.poll();
   update_mode();
-  
+
   switchManager.setCallback(update_mode);
 }
 
 void loop()
 {
   switchManager.poll();
-  
+
   if((g_mode == MODE_LUNA_RGB) || (g_mode == MODE_LUNA_RGB_SEG))
     luna.poll();
-	
-	if(g_mode == MODE_WHEEL)
-	{
-		// This is the Adafruit rainbow demo from their library
+
+  if(g_mode == MODE_WHEEL)
+  {
+    // This is the Adafruit rainbow demo from their library
     // See: https://github.com/adafruit/Adafruit_NeoPixel
     uint16_t i, j;
     for(j=0; j<256; j++)
@@ -103,30 +103,30 @@ void loop()
       switchManager.poll();
       if(g_mode != MODE_WHEEL)
         break;
-      
+
       for(i=0; i<strip.numPixels(); i++)
         strip.setPixelColor(i, wheel((i+j) & 255));
       strip.show();
       delay(25);
     }
-	}
+  }
 }
 
 void luna_handler(lunachannel_t channel, lunachannelvalue_t value)
 {
 #ifdef DEBUG_BAUD
-	Serial.print("Luna channel ");
-	Serial.print(channel);
-	Serial.print(" = ");
-	Serial.println(value);
+  Serial.print("Luna channel ");
+  Serial.print(channel);
+  Serial.print(" = ");
+  Serial.println(value);
 #endif
 
-	if(channel <= BLUE)
+  if(channel <= BLUE)
     g_lunaSettings[channel] = value;
   else
     return;
 
-	set_strip(g_lunaSettings[RED], g_lunaSettings[GREEN], g_lunaSettings[BLUE], g_lunaSettings[BRIGHTNESS]);
+  set_strip(g_lunaSettings[RED], g_lunaSettings[GREEN], g_lunaSettings[BLUE], g_lunaSettings[BRIGHTNESS]);
 }
 
 void update_mode(inputtype_t type, IInputDevice * device)
@@ -140,7 +140,7 @@ void update_mode(inputtype_t type, IInputDevice * device)
   Serial.println(g_mode);
 #endif
 
-	switch(g_mode)
+  switch(g_mode)
   {
     case MODE_PRESET:
     {
