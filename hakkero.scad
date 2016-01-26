@@ -1,4 +1,4 @@
-include <CAD-Library/dxf_import.scad>;
+include <Suwako/DXFImport.scad>;
 
 module Top(material_thickness)
 {
